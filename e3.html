@@ -1,0 +1,92 @@
+
+<html>
+<head>
+
+<script>
+
+  //flyweights is a way to store information that is common across multiple objects
+  //to save memory. In this example, the javascript code stores only three strings
+  //in the objects object, while the html code uses six. This example is simple because
+  //the keys for the objects are equal to their values. This is similar to a hashing table.
+  //learning sources:
+  //http://www.dofactory.com/javascript/flyweight-design-pattern
+  //https://en.wikipedia.org/wiki/Flyweight_pattern#Example_in_C.23
+  //http://addyosmani.com/resources/essentialjsdesignpatterns/book/#detailflyweight
+  //http://stackoverflow.com/questions/5223/length-of-a-javascript-object-that-is-associative-array
+
+  var objects = {};
+  var flyweight = (function() {
+
+
+
+    return {
+
+      add : function(name) {
+        if(objects[name] == null) {
+          objects[name] = name
+
+        }
+        return objects[name];
+
+      },
+
+      count : function() {
+        var size = 0, key;
+        for (key in objects) {
+            if (objects.hasOwnProperty(key)) size++;
+        }
+
+        document.getElementById("flyweight_test_flyweights").innerHTML = size.toString();
+      },
+
+      getAllFlyweights : function () {
+        var size = 0, key, r = "";
+        for (key in objects) {
+            if (objects.hasOwnProperty(key)) {r += objects[key] + " "};
+        }
+        return r;
+      }
+
+    }
+
+  })
+
+  function test_flyweight() {
+    var names =
+    flyweight().add("pineapple") + ", " +
+    flyweight().add("apple") + ", " +
+    flyweight().add("pineapple") + ", " +
+    flyweight().add("banana") + ", " +
+    flyweight().add("banana") + ", " +
+    flyweight().add("banana");
+
+    flyweight().count();
+    document.getElementById("flyweight_test_objects").innerHTML = "6";
+    document.getElementById("flyweight_test_names").innerHTML = names;
+    document.getElementById("flyweight_test_names_flyweights").innerHTML = flyweight().getAllFlyweights();
+
+  }
+
+
+
+</script>
+
+</head>
+
+<body onload="test_flyweight()">
+
+  <h3>Flyweight Design Pattern</h3>
+  <p>
+    Number of variables: <span id="flyweight_test_objects"></span>
+    <br>
+    Number of flyweights: <span id="flyweight_test_flyweights"></span>
+    <br>
+    List of variables: <span id="flyweight_test_names"></span>
+    <br>
+    List of flyweights: <span id="flyweight_test_names_flyweights"></span>
+    <br>
+  </p>
+
+</body>
+
+</html>
